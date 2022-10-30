@@ -71,7 +71,7 @@ const SignUpScreen = () => {
 
                 <CustomButton
                     text="Back to Sign In"
-                    onPres={onSignInPressed}
+                    onPress={onSignInPressed}
                     type="SECONDARY"
                 />
 

@@ -49,7 +49,7 @@ const ConfirmEmailScreen = () => {
 
                 <CustomButton
                     text="Back to Sign In"
-                    onPres={onBackPressed}
+                    onPress={onBackPressed}
                     type="SECONDARY"
                 />
 
