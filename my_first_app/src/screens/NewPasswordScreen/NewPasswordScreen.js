@@ -3,11 +3,11 @@ import {View, Text, Image, StyleSheet, useWindowDimensions, ScrollView } from 'r
 import Logo from '../../../assets/images/Logo.png';
 import CustomInput from '../../components/CustomInput/CustomInput';
 import CustomButton from '../../components/CustomButton/CustomButton';
-import {useNavigation} from '@react-navigation/native'
+import {useNavigation} from '@react-navigation/core';
+import {useForm} from 'react-hook-form';
 
 const NewPasswordScreen = () => {
-    const [code, setCode] = useState('');
-    const [newPassword, setNewPassword] = useState('');
+    const {control, handleSubmit} = useForm();
 
     const navigation = useNavigation();
 
@@ -15,7 +15,8 @@ const NewPasswordScreen = () => {
         navigation.navigate("SignInScreen")
     }
 
-    const onSubmitPressed = () => {
+    const onSubmitPressed = (data) => {
+        console.warn(data)
         navigation.navigate("HomeScreen")
     }
 
@@ -25,20 +26,31 @@ const NewPasswordScreen = () => {
                 <Text style={styles.title}>Reset Your Password</Text>
                 
                 <CustomInput 
+                    name="code"
+                    control={control}
                     placeholder="Code" 
-                    value={code} 
-                    setValue={setCode} 
+                    rules={{
+                        required: "Confirmation code is required"
+                    }}
                 />
 
                 <CustomInput 
+                    name="password"
+                    control={control}
                     placeholder="Enter your new password" 
-                    value={newPassword} 
-                    setValue={setNewPassword} 
+                    secureTextEntry
+                    rules={{
+                        required:  "Password*",
+                        minLength: {
+                            value: 8,
+                            message: 'Your password must include atleast 8 characters'
+                        }
+                    }}
                 />
 
                 <CustomButton
                     text="Submit" 
-                    onPress={onSubmitPressed}
+                    onPress={handleSubmit(onSubmitPressed)}
                     type= "PRIMARY"
                 />
 

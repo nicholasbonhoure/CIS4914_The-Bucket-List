@@ -3,10 +3,11 @@ import {View, Text, Image, StyleSheet, useWindowDimensions, ScrollView } from 'r
 import Logo from '../../../assets/images/Logo.png';
 import CustomInput from '../../components/CustomInput/CustomInput';
 import CustomButton from '../../components/CustomButton/CustomButton';
-import {useNavigation} from '@react-navigation/native'
+import {useNavigation} from '@react-navigation/native';
+import {useForm} from 'react-hook-form';
 
 const ConfirmEmailScreen = () => {
-    const [code, setCode] = useState('');
+    const {control, handleSubmit} = useForm();
 
     const navigation = useNavigation();
 
@@ -15,7 +16,8 @@ const ConfirmEmailScreen = () => {
         navigation.navigate("SignInScreen")
     }
 
-    const onConfirmPressed = () => {
+    const onConfirmPressed = (data) => {
+        console.warn(data);
         navigation.navigate("HomeScreen")
     }
 
@@ -30,14 +32,17 @@ const ConfirmEmailScreen = () => {
                 <Text style={styles.title}>Confirm Your Email</Text>
                 
                 <CustomInput 
+                    name="code"
+                    control={control}
                     placeholder="Enter your confirmation code" 
-                    value={code} 
-                    setValue={setCode} 
+                    rules={{
+                        required: 'Must input confirmation code'
+                    }} 
                 />
 
                 <CustomButton
                     text="Confirm" 
-                    onPress={onConfirmPressed}
+                    onPress={handleSubmit(onConfirmPressed)}
                     type= "PRIMARY"
                 />
 

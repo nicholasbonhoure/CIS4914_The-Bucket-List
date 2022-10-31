@@ -1,20 +1,32 @@
 import React, {useState} from 'react';
-import {View, Text, Image, StyleSheet, useWindowDimensions, ScrollView } from 'react-native';
+import {
+    View, 
+    Text, 
+    Image, 
+    StyleSheet, 
+    useWindowDimensions, 
+    ScrollView,
+    TextInput,
+ } from 'react-native';
 import Logo from '../../../assets/images/Logo.png';
 import CustomInput from '../../components/CustomInput/CustomInput';
 import CustomButton from '../../components/CustomButton/CustomButton';
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/core';
+import {useForm, Controller} from 'react-hook-form';
 
 const SignInScreen = () => {
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
-
     const {height} = useWindowDimensions();
     const navigation = useNavigation();
 
-    const onSignInPressed = () => {
-        //TODO: validate the user
+    const {
+        control, 
+        handleSubmit, 
+        formState: {errors},
+    } = useForm();
 
+    const onSignInPressed = (data) => {
+        //TODO: validate the user
+        console.log(data);
         navigation.navigate("HomeScreen");
     }
 
@@ -54,20 +66,22 @@ const SignInScreen = () => {
                 />
                 
                 <CustomInput 
+                    name="username"
                     placeholder="Username" 
-                    value={username} 
-                    setValue={setUsername} 
+                    control={control}
+                    rules={{required: 'Username*', minLength: {value: 3, message: 'Username must be longer than 3 characters'}, maxLength: {value: 30, message: 'Username must be shorter than 30 characters'}}}
                 />
 
                 <CustomInput 
+                    name="password"
                     placeholder="Password" 
-                    value={password} 
-                    setValue={setPassword} 
                     secureTextEntry={true}
+                    control={control}
+                    rules={{required: 'Password*', minLength: {value: 8, message: 'Password must be atleast 8 characters'}}}
                 />
 
                 <CustomButton
-                    text="Sign In" onPress={onSignInPressed}
+                    text="Sign In" onPress={handleSubmit(onSignInPressed)}
                     type="PRIMARY"
                 />
 

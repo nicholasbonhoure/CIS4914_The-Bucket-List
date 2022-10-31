@@ -3,13 +3,14 @@ import {View, Text, Image, StyleSheet, useWindowDimensions, ScrollView } from 'r
 import Logo from '../../../assets/images/Logo.png';
 import CustomInput from '../../components/CustomInput/CustomInput';
 import CustomButton from '../../components/CustomButton/CustomButton';
-import {useNavigation} from '@react-navigation/native'
+import {useNavigation} from '@react-navigation/native';
+import {useForm} from 'react-hook-form';
+
+const EMAIL_REGEX= /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
 
 const SignUpScreen = () => {
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
-    const [passwordRepeat, setPasswordRepeat] = useState('');
-    const [email, setEmail] = useState('');
+    const{control, handleSubmit, watch} = useForm();
+    const pwd = watch('password');
 
     const navigation = useNavigation();
 
@@ -22,7 +23,6 @@ const SignUpScreen = () => {
     }
 
     const onSignInPressed = () => {
-        console.warn("HEllO")
         navigation.navigate('SignInScreen')
     }
 
@@ -32,35 +32,42 @@ const SignUpScreen = () => {
                 <Text style={styles.title}>Create An Account</Text>
                 
                 <CustomInput 
-                    placeholder="Username" 
-                    value={username} 
-                    setValue={setUsername} 
+                    name="username" 
+                    control={control}
+                    placeholder="Username"
+                    rules={{required: 'Username*', minLength: {value: 3, message: 'Username must be longer than 3 characters'}, maxLength: {value: 30, message: 'Username must be shorter than 30 characters'}}}
                 />
 
                 <CustomInput 
-                    placeholder="Password" 
-                    value={password} 
-                    setValue={setPassword} 
+                    name="password"
+                    control={control}
+                    placeholder="Password"  
                     secureTextEntry={true}
+                    rules={{required: 'Password*', minLength: {value: 8, message: 'Password must be longer than 8 characters'}}}
                 />
 
-                <CustomInput 
+                <CustomInput
+                    name="repeatPassword"
+                    control={control} 
                     placeholder="Retype Your Password" 
-                    value={passwordRepeat} 
-                    setValue={setPasswordRepeat} 
                     secureTextEntry={true}
+                    rules={{
+                        validate: value => 
+                            value == pwd || 'Password do not match',
+                    }}
                 />
 
-                <CustomInput 
+                <CustomInput
+                    name="email"
+                    control={control} 
                     placeholder="Email" 
-                    value={email} 
-                    setValue={setEmail} 
                     secureTextEntry={true}
+                    rules={{pattern: {EMAIL_REGEX, message: 'Invalid Email'}}}
                 />
 
                 <CustomButton
                     text="Register" 
-                    onPress={onRegisterPressed}
+                    onPress={handleSubmit(onRegisterPressed)}
                     type= "PRIMARY"
                 />
 
