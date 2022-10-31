@@ -60,7 +60,7 @@ const SignInScreen = () => {
         <ScrollView showsVerticalScrollIndicator={false}>
             <View style={styles.root}>
 
-                <Text style={{fontSize: 40, alignSelf: 'center'}}>The Bucket List</Text>
+                <Text style={{fontSize: 40, alignSelf: 'center', fontWeight: 'bold'}}>The Bucket List</Text>
 
                 <Image 
                     source={Logo} // accredited too Adrien Coquet FR
@@ -68,7 +68,7 @@ const SignInScreen = () => {
                     resizeMode="contain" 
                 />
 
-                <Text style={{fontSize: 24, alignSelf: 'center'}}>Log In</Text>
+                <Text style={{fontSize: 24, alignSelf: 'center', fontWeight: 'bold'}}>Log In</Text>
                 
                 <CustomInput 
                     name="username"
@@ -138,10 +138,10 @@ const styles = StyleSheet.create({
     root: {
         alignItems: 'center',
         padding: 20,
-        backgroundColor: "#FFFBF7",
+        backgroundColor: "#FFF3E8",
     },
     logo: {
-        width: '70%',
+        width: '50%',
         maxWidth: 300,
         maxHeight: 200,
     },
