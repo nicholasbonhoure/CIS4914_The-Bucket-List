@@ -2,7 +2,7 @@
   package="com.my_first_app">
 
     <uses-permission android:name="android.permission.INTERNET" />
-
+    
     <application
       android:name=".MainApplication"
       android:label="@string/app_name"
@@ -22,5 +22,9 @@
             <category android:name="android.intent.category.LAUNCHER" />
         </intent-filter>
       </activity>
+            <!-- You will only need to add this meta-data tag, but make sure it's a child of application -->
+      <meta-data
+        android:name="com.google.android.geo.API_KEY"
+        android:value="AIzaSyBAwtt4a99LSDUdiCFp1Tk3_TQj6tu0LEE"/>
     </application>
 </manifest>
