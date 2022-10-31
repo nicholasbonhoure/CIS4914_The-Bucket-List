@@ -59,11 +59,16 @@ const SignInScreen = () => {
     return (
         <ScrollView showsVerticalScrollIndicator={false}>
             <View style={styles.root}>
+
+                <Text style={{fontSize: 40, alignSelf: 'center'}}>The Bucket List</Text>
+
                 <Image 
-                    source={Logo} 
+                    source={Logo} // accredited too Adrien Coquet FR
                     style={[styles.logo, {height: height * 0.3}]} 
                     resizeMode="contain" 
                 />
+
+                <Text style={{fontSize: 24, alignSelf: 'center'}}>Log In</Text>
                 
                 <CustomInput 
                     name="username"
@@ -133,12 +138,14 @@ const styles = StyleSheet.create({
     root: {
         alignItems: 'center',
         padding: 20,
+        backgroundColor: "#FFFBF7",
     },
     logo: {
         width: '70%',
         maxWidth: 300,
         maxHeight: 200,
     },
+    
 });
 
 export default SignInScreen;
