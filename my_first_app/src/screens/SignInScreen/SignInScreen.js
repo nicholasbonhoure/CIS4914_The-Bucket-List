@@ -83,10 +83,11 @@ const SignInScreen = () => {
                     secureTextEntry={true}
                     control={control}
                     rules={{required: 'Password*', minLength: {value: 8, message: 'Password must be atleast 8 characters'}}}
-                />
+                />  
 
                 <CustomButton
-                    text="Sign In" onPress={handleSubmit(onSignInPressed)}
+                    text="Sign In" 
+                    onPress={handleSubmit(onSignInPressed)}
                     type="PRIMARY"
                 />
 
