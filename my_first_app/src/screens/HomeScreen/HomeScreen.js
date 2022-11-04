@@ -1,54 +1,23 @@
-// import React from 'react'
-// import { View, Text } from 'react-native'
+import React from 'react'
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs'
+import MapScreen from '../MapScreen/MapScreen';
+import ExploreScreen from '../ExploreScreen';
 
-// const HomeScreen = () => {
-//     return (
-//         <View>
-//             <Text style={{fontSize: 24, alignSelf: 'center'}}>Home</Text>
-//         </View>
-//     )
-// }
+const Tab = createBottomTabNavigator();
 
-// export default HomeScreen;
-
-import React from 'react';
-import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
-import NfcManager, {NfcTech} from 'react-native-nfc-manager';
-
-// Pre-step, call this before any NFC operations
-NfcManager.start();
-
-function HomeScreen() {
-  async function readNdef() {
-    try {
-      // register for the NFC tag with NDEF in it
-      await NfcManager.requestTechnology(NfcTech.Ndef);
-      // the resolved tag object will contain `ndefMessage` property
-      const tag = await NfcManager.getTag();
-      console.warn('Tag found', tag);
-    } catch (ex) {
-      console.warn('Oops!', ex);
-    } finally {
-      // stop the nfc scanning
-      NfcManager.cancelTechnologyRequest();
-    }
-  }
-
-  return (
-    <View style={styles.wrapper}>
-      <TouchableOpacity onPress={readNdef}>
-        <Text>Scan a Tag</Text>
-      </TouchableOpacity>
-    </View>
-  );
+const HomeNavigation = () => {
+    return (
+        <Tab.Navigator>
+            <Tab.Screen name="ExploreScreen" component={ExploreScreen} options={{headerShown: false}} />
+            <Tab.Screen name="MapScreen" component={MapScreen} options={{headerShown: false}}/>
+        </Tab.Navigator>
+    );
 }
 
-const styles = StyleSheet.create({
-  wrapper: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-});
+const HomeScreen = () => {
+    return (
+        <HomeNavigation></HomeNavigation>
+    );
+}
 
 export default HomeScreen;
