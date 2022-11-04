@@ -1,13 +1,11 @@
-import { useNavigation } from '@react-navigation/native';
-import React, { useEffect } from 'react';
+import React from 'react';
 import {View, Text, StyleSheet, ScrollView } from 'react-native';
 
-const ExploreScreen = () => {
-
+const ProfileScreen = () => {
     return (
         <ScrollView showsVerticalScrollIndicator={false}>
             <View style={styles.root}>
-                <Text>Explore Page</Text>
+                <Text>Profile Page</Text>
             </View>
         </ScrollView>
     );
@@ -21,4 +19,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default ExploreScreen;
+export default ProfileScreen;
