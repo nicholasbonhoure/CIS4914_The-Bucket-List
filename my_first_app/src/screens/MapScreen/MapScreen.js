@@ -1,11 +1,10 @@
 import React from 'react';
-import {View, Text, TouchableOpacity, StyleSheet, ScrollView} from 'react-native';
+import {View, Text, TouchableOpacity, StyleSheet, ScrollView, Button} from 'react-native';
 import NfcManager, {NfcTech} from 'react-native-nfc-manager';
+import CheckBox from '@react-native-community/checkbox';
 
 // Pre-step, call this before any NFC operations
 NfcManager.start();
-
-
 
 function MapScreen() {
   async function readNdef() {
@@ -25,11 +24,28 @@ function MapScreen() {
 
   return (
     <>
-      <View style={styles.wrapper}>
-        <Text> The University of Florida </Text>
-        <TouchableOpacity onPress={readNdef}>
-          <Text> Scan a Tag </Text>
-        </TouchableOpacity>
+      <Text> The University of Florida </Text>
+      <View style={[styles.wrapper, {flexDirection: 'row', padding: 1, margin: 1}]}>
+        <CheckBox 
+          disabled={false}
+        />
+        <Text> Reitz Union </Text>
+        <Button
+          title="Scan"
+          onPress={readNdef}
+          color= "#FA4616"
+        />
+      </View>
+      <View style={[styles.wrapper, {flexDirection: 'row', padding: 1, margin: 1}]}>
+        <CheckBox 
+          disabled={false}
+        />
+        <Text> Centry Tower </Text>
+        <Button
+          title="Scan"
+          onPress={readNdef}
+          color= "#FA4616"
+        />
       </View>
     </>
   );
@@ -40,6 +56,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+
   },
   body: {
     flex: 1,
