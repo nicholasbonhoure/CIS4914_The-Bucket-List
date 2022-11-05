@@ -1,5 +1,75 @@
 import React, { useState, useEffect } from 'react';
-import {View, Text, StyleSheet, ScrollView, FlatList, TextInput } from 'react-native';
+import {View, Text, StyleSheet, ScrollView, FlatList, TextInput, ImageBackground, Alert, Button} from 'react-native';
+import MapView, {PROVIDER_GOOGLE, Marker, Callout} from 'react-native-maps';
+import Logo from '../../../assets/images/Logo.png';
+import InfoIcon from '../../../assets/images/info_icon.svg';
+
+const addTrip = () => {
+    console.warn("Added trip")
+}
+
+const markerClicked = (data) => {
+    Alert.alert(
+        "The University of Florida",
+        "Add to your Bucket List?",
+        [
+            {
+                text: "Cancel",
+                onPress: () => console.log("Cancel Pressed"),
+                style: "cancel"
+            },
+            { text: "OK", onPress: () => console.log("OK Pressed") }
+        ],
+        {
+            cancelable: true,
+        }
+    );
+}
+
+
+function Map() {
+
+    var state = {
+        coordinates: [
+            {name: "The University of Florida", latitude: 29.643946, longitude: -82.355659},
+            {name: "Cade Muesuem", latitude: 29.643423, longitude: -82.324967},
+        ]
+    }
+
+    return (
+        <MapView
+            provider={PROVIDER_GOOGLE} // remove if not using Google Maps
+            style={styles.map}
+            region={{
+                latitude: 29.643946,
+                longitude: -82.355659,
+                latitudeDelta: 0.015,
+                longitudeDelta: 0.0121,
+            }}
+        >
+            <Marker coordinate={{latitude: 29.643946, longitude: -82.355659}}> 
+                <Callout onPress={markerClicked}>
+                    {/* <Image source={Logo} /> */}
+                    <Text style={{color: 'black'}}>The University Of Florida</Text>
+                </Callout>
+            </Marker>
+        </MapView>
+        // {
+        //     state.coordinates.map(marker => (
+        //         <Marker
+        //             key={marker.name}
+        //             coordinate={{latitude: marker.latitude, longitude: marker.longitude}}
+        //         >
+        //             <Callout onPress={markerClicked}>
+        //                 {/* <Image source={Logo} /> */}
+        //                 <Text style={{color: 'black'}}>{marker.name}</Text>
+        //             </Callout>
+        //         </Marker>
+        //     ))
+        // }
+    );
+}
+
 
 const ExploreScreen = () => {
     const [filterdData, setfilterdData] = useState([]);
@@ -13,8 +83,10 @@ const ExploreScreen = () => {
         }
     }, [])
 
+    const searchTips = () => {
+        console.warn("Search Tips")
+    }
 
-    
     const fetchPosts =() => {
         const apiURL = 'https://jsonplaceholder.typicode.com/posts';
         fetch(apiURL)
@@ -64,40 +136,68 @@ const ExploreScreen = () => {
 
     return (
         // <ScrollView showsVerticalScrollIndicator={false}>
-            <View style={styles.container}>
+        <>
+            <Map style={styles.container}></Map>
+            <View style={[styles.container, {flexDirection: 'row'}]}>
+                <ImageBackground
+                    style={{height: 35, width: 35,}}
+                    source={Logo}
+                />
                 <TextInput
-                    style={styles.textInputStyle}
+                    style={[styles.textInputStyle, {height: '60%'}]}
                     value={search}
                     placeholder="Search"
                     underlineColorAndroid="transparent"
                     onChangeText={(text)=> searchFilter(text)}
                 />
-                <FlatList
+                <ImageBackground
+                    style={{height: 20, width: 20}}
+                    source={InfoIcon}
+                    onPress={searchTips}
+                />
+                {/* <FlatList
                     data={filterdData}
                     keyExtractor={(item, index) => index.toString()}
                     ItemSeparatorComponent={ItemSeparatorView}
                     renderItem={ItemView}
-                />
+                /> */}
             </View>
+        </>
         // </ScrollView>
     );
 };
 
 const styles = StyleSheet.create({
     container:{
+        flex: 1,
         backgroundColor: 'white'
     },
     itemStyle:{
-        padding: 15
+        flex: 1,
     },
     textInputStyle: {
-        height: 40,
+        flex: 1,
+        height: "60%",
+        width: "70%",
         borderWidth: 1,
-        paddingLeft: 20,
         margin: 5,
+        flexDirection: 'row',
         borderColor: '#009688',
         backgroundColor: 'white'
-    }
+    },
+    container: {
+        ...StyleSheet.absoluteFillObject,
+        flex: 1,
+        height: "10%",
+        width: "100%",
+        justifyContent: 'flex-end',
+        alignItems: 'center',
+      },
+      map: {
+        // ...StyleSheet.absoluteFillObject,
+        flex: 1,
+        height: "100%",
+      },
 });
 
 export default ExploreScreen;
