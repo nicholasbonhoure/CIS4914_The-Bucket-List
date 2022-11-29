@@ -183,7 +183,7 @@ const styles = StyleSheet.create({
         margin: 5,
         flexDirection: 'row',
         borderColor: '#009688',
-        backgroundColor: 'white'
+        backgroundColor: "#FFF3E8",
     },
     container: {
         ...StyleSheet.absoluteFillObject,

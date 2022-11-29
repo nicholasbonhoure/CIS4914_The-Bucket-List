@@ -13,10 +13,18 @@ import CustomInput from '../../components/CustomInput/CustomInput';
 import CustomButton from '../../components/CustomButton/CustomButton';
 import {useNavigation} from '@react-navigation/core';
 import {useForm, Controller} from 'react-hook-form';
+import auth from '@react-native-firebase/auth';
+import {authentication} from '../../../firebase/firebase-config';
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
 const SignInScreen = () => {
     const {height} = useWindowDimensions();
     const navigation = useNavigation();
+
+    const [isSignedIn, setIsSignedIn] = useState(false);
+    const [email, setEmail] = useState(null);
+    const [password, setPassword] = useState(null);
+
 
     const {
         control, 
@@ -25,8 +33,15 @@ const SignInScreen = () => {
     } = useForm();
 
     const onSignInPressed = (data) => {
-        //TODO: validate the user
-        console.log(data);
+        auth().signInWithEmailAndPassword(data.username, data.password)
+        .then((re)=>{
+            setIsSignedIn(true);
+        })
+        .catch((re)=>{
+            console.log(re);
+        })
+        console.log(data.password);
+
         navigation.navigate("HomeScreen");
     }
 
@@ -73,6 +88,8 @@ const SignInScreen = () => {
                 <CustomInput 
                     name="username"
                     placeholder="Username" 
+                    value={email}
+                    onChangeText={text=>setEmail(text)}
                     control={control}
                     rules={{required: 'Username*', minLength: {value: 3, message: 'Username must be longer than 3 characters'}, maxLength: {value: 30, message: 'Username must be shorter than 30 characters'}}}
                 />
@@ -80,6 +97,8 @@ const SignInScreen = () => {
                 <CustomInput 
                     name="password"
                     placeholder="Password" 
+                    value={password}
+                    onChangeText={text=>setPassword(text)}
                     secureTextEntry={true}
                     control={control}
                     rules={{required: 'Password*', minLength: {value: 8, message: 'Password must be atleast 8 characters'}}}

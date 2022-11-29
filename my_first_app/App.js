@@ -6,11 +6,14 @@
  * @flow strict-local
  */
 
-import React from 'react';
+import React, {useState} from 'react';
 import {SafeAreaView, StyleSheet, Text} from 'react-native';
-import Navigation from './src/navigation'
+import Navigation from './src/navigation';
+import { auth } from './firebase/firebase-config';
 
 const App = () => {
+  const [isSignedIn,setIsSignedIn] = useState(false);
+
   return (
     <SafeAreaView style={styles.root}>
       <Navigation />
