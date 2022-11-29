@@ -5,6 +5,10 @@ import CustomInput from '../../components/CustomInput/CustomInput';
 import CustomButton from '../../components/CustomButton/CustomButton';
 import {useNavigation} from '@react-navigation/native';
 import {useForm} from 'react-hook-form';
+import auth from '@react-native-firebase/auth';
+import {authentication} from '../../../firebase/firebase-config';
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+
 
 const EMAIL_REGEX= /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
 
@@ -12,9 +16,25 @@ const SignUpScreen = () => {
     const{control, handleSubmit, watch} = useForm();
     const pwd = watch('password');
 
-    const navigation = useNavigation();
+    const [isSignedIn, setIsSignedIn] = useState(false);
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState(null);
+    const [email, setEmail] = useState(null);
 
-    const onRegisterPressed = () => {
+    const navigation = useNavigation();
+    
+    //const authentication = getAuth();
+
+    const onRegisterPressed = (data) => {
+        auth().createUserWithEmailAndPassword(data.email,data.password)
+        .then((re)=> {
+            console.log(re);
+            setIsSignedIn(true)
+        })
+        .catch((re)=> {
+            console.log(re);
+        })
+        console.log(data)
         navigation.navigate('ConfirmEmailScreen')
     }
     
@@ -35,13 +55,17 @@ const SignUpScreen = () => {
                     name="username" 
                     control={control}
                     placeholder="Username"
+                    value={username}
+                    onChangeText = { text => setUsername(text)}
                     rules={{required: 'Username*', minLength: {value: 3, message: 'Username must be longer than 3 characters'}, maxLength: {value: 30, message: 'Username must be shorter than 30 characters'}}}
                 />
 
                 <CustomInput 
                     name="password"
                     control={control}
-                    placeholder="Password"  
+                    placeholder="Password" 
+                    value={password}
+                    onChangeText = { text => setPassword(text)} 
                     secureTextEntry={true}
                     rules={{required: 'Password*', minLength: {value: 8, message: 'Password must be longer than 8 characters'}}}
                 />
@@ -61,7 +85,8 @@ const SignUpScreen = () => {
                     name="email"
                     control={control} 
                     placeholder="Email" 
-                    secureTextEntry={true}
+                    value={email}
+                    onChangeText = { text => setEmail(text)} 
                     rules={{pattern: {EMAIL_REGEX, message: 'Invalid Email'}}}
                 />
 

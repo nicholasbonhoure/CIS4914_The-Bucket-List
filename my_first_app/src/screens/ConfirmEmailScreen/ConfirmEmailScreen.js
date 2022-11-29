@@ -4,6 +4,10 @@ import CustomInput from '../../components/CustomInput/CustomInput';
 import CustomButton from '../../components/CustomButton/CustomButton';
 import {useNavigation} from '@react-navigation/native';
 import {useForm} from 'react-hook-form';
+import auth from '@react-native-firebase/auth';
+import {authentication} from '../../../firebase/firebase-config';
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+
 
 const ConfirmEmailScreen = () => {
     const {control, handleSubmit} = useForm();
@@ -16,6 +20,7 @@ const ConfirmEmailScreen = () => {
     }
 
     const onConfirmPressed = (data) => {
+
         console.warn(data);
         navigation.navigate("HomeScreen")
     }
