@@ -50,7 +50,6 @@ const SignInScreen = () => {
 
     const onSignInFacebook = () => {
         console.warn("onSignInFacebook")
-        
     }
 
     const onSignInGoogle = () => {

@@ -45,6 +45,7 @@ function MapScreen() {
         />
         <Text style={styles.headerText}> The Bucket List </Text>
       </View>
+      
       {/* Title */}
       <Text style={styles.title}> Your Trip To </Text>
       <Text style={styles.title}> The University of Florida </Text>
