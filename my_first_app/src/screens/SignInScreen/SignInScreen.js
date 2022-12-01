@@ -41,8 +41,7 @@ const SignInScreen = () => {
             console.log(re);
         })
         console.log(data.password);
-
-        navigation.navigate("HomeScreen");
+        isSignedIn ? navigation.navigate("HomeScreen") : console.log('incorrect log in')
     }
 
     const onForgotPasswordPressed = () => {
